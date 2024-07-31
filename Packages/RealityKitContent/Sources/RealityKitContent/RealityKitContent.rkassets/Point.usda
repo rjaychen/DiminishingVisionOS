@@ -1,0 +1,168 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 1.0 (409.100.15)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    def Sphere "Sphere" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        reorder nameChildren = ["DefaultMaterial", "WorldPosMaterial"]
+        rel material:binding = </Root/WorldPosMaterial/worldPosMaterial> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        double radius = 0.1
+    }
+
+    def "WorldPosMaterial" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @Materials/WorldPosMaterial.usda@
+    )
+    {
+        rel material:binding = </Root/WorldPosMaterial/worldPosMaterial> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0.0038460288, 0, 0.13932219)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "worldPosMaterial"
+        {
+            float3 inputs:WorldSpacePos = (0, 0, 0) (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-896.5115, -94.78086)
+                        int stackingOrderInSubgraph = 729
+                    }
+                }
+            )
+            token outputs:mtlx:surface.connect = </Root/WorldPosMaterial/worldPosMaterial/UnlitSurface.outputs:out>
+            token outputs:surface.connect = </Root/WorldPosMaterial/worldPosMaterial/UsdPreviewSurface.outputs:surface>
+            float2 ui:nodegraph:realitykit:subgraphOutputs:size = (181.5, 99)
+
+            over "Position"
+            {
+                string inputs:space = "world"
+                float2 ui:nodegraph:node:pos = (-884.6326, -167.15701)
+                float2 ui:nodegraph:node:size = (133.5, 40)
+                int ui:nodegraph:node:stackingOrder = 729
+            }
+
+            over "Constant_1"
+            {
+                float2 ui:nodegraph:node:pos = (-458.85245, -36.584816)
+                float2 ui:nodegraph:node:size = (154.5, 53)
+                int ui:nodegraph:node:stackingOrder = 672
+            }
+
+            over "Constant_2"
+            {
+                float2 ui:nodegraph:node:pos = (-411.98917, 13.2354965)
+                float2 ui:nodegraph:node:size = (156, 53)
+                int ui:nodegraph:node:stackingOrder = 651
+            }
+
+            over "Multiply"
+            {
+                float3 inputs:in1.connect = </Root/WorldPosMaterial/worldPosMaterial/Add_1.outputs:out>
+                float2 ui:nodegraph:node:pos = (-342.47745, -72.31138)
+                float2 ui:nodegraph:node:size = (60, 36)
+                int ui:nodegraph:node:stackingOrder = 651
+            }
+
+            over "Add"
+            {
+                float2 ui:nodegraph:node:pos = (-246.68057, -50.303566)
+                float2 ui:nodegraph:node:size = (61.5, 36.5)
+                int ui:nodegraph:node:stackingOrder = 651
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:out"]
+            }
+
+            over "Swizzle"
+            {
+                float3 inputs:in.connect = </Root/WorldPosMaterial/worldPosMaterial/Clamp.outputs:out>
+                float2 ui:nodegraph:node:pos = (-22.16809, -30.862137)
+                float2 ui:nodegraph:node:size = (133.5, 40)
+                int ui:nodegraph:node:stackingOrder = 671
+            }
+
+            over "UnlitSurface" (
+                active = true
+            )
+            {
+                color3f inputs:color
+                float2 ui:nodegraph:node:size = (194.5, 181)
+            }
+
+            def Shader "Clamp"
+            {
+                uniform token info:id = "ND_clamp_vector3"
+                float3 inputs:high
+                float3 inputs:in.connect = </Root/WorldPosMaterial/worldPosMaterial/Add.outputs:out>
+                float3 inputs:low
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-106.1874, -171.79149)
+                float2 ui:nodegraph:node:size = (89.5, 145)
+                int ui:nodegraph:node:stackingOrder = 709
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:in", "inputs:low", "inputs:low"]
+            }
+
+            def Shader "Constant"
+            {
+                uniform token info:id = "ND_constant_vector3"
+                float3 inputs:value = (0, -1, 0)
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-706.375, -4.6601562)
+                float2 ui:nodegraph:node:size = (154.5, 53)
+                int ui:nodegraph:node:stackingOrder = 702
+            }
+
+            def Shader "Add_1"
+            {
+                uniform token info:id = "ND_add_vector3"
+                float3 inputs:in1.connect = </Root/WorldPosMaterial/worldPosMaterial/Add_2.outputs:out>
+                float3 inputs:in2.connect = </Root/WorldPosMaterial/worldPosMaterial/Constant.outputs:out>
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-633.2847, -76.20703)
+                float2 ui:nodegraph:node:size = (61.5, 36.5)
+                int ui:nodegraph:node:stackingOrder = 715
+            }
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+                float2 ui:nodegraph:node:pos = (-185.36746, 66.8515)
+                int ui:nodegraph:node:stackingOrder = 706
+            }
+
+            def Shader "UsdPreviewSurface" (
+                active = false
+            )
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                token outputs:surface
+            }
+
+            def Shader "Add_2"
+            {
+                uniform token info:id = "ND_add_vector3"
+                float3 inputs:in1.connect = </Root/WorldPosMaterial/worldPosMaterial/Position.outputs:out>
+                float3 inputs:in2.connect = </Root/WorldPosMaterial/worldPosMaterial.inputs:WorldSpacePos>
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-686.2401, -175.07117)
+                float2 ui:nodegraph:node:size = (61.5, 36.5)
+                int ui:nodegraph:node:stackingOrder = 727
+            }
+        }
+    }
+}
+

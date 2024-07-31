@@ -1,0 +1,105 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 1.0 (409.100.15)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    reorder nameChildren = ["worldPosMaterial", "worldPosMaterial"]
+    def Material "worldPosMaterial" (
+        references = None
+    )
+    {
+        token outputs:mtlx:surface.connect = </Root/worldPosMaterial/UnlitSurface.outputs:out>
+        token outputs:realitykit:vertex
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:mtlx:surface"]
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (452.76172, 27.148438)
+        float2 ui:nodegraph:realitykit:subgraphOutputs:size = (181.5, 99)
+        int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 567
+
+        def Shader "Position"
+        {
+            uniform token info:id = "ND_position_vector3"
+            string inputs:space = "world"
+            float3 outputs:out
+            float2 ui:nodegraph:node:pos = (-319.46964, -49.971535)
+            float2 ui:nodegraph:node:size = (133.5, 40)
+            int ui:nodegraph:node:stackingOrder = 567
+        }
+
+        def Shader "Multiply"
+        {
+            uniform token info:id = "ND_multiply_vector3"
+            float3 inputs:in1.connect = </Root/worldPosMaterial/Position.outputs:out>
+            float3 inputs:in2.connect = </Root/worldPosMaterial/Constant_1.outputs:out>
+            float3 outputs:out
+            float2 ui:nodegraph:node:pos = (-199.5712, -27.010597)
+            float2 ui:nodegraph:node:size = (60, 36)
+            int ui:nodegraph:node:stackingOrder = 571
+        }
+
+        def Shader "Constant_1"
+        {
+            uniform token info:id = "ND_constant_vector3"
+            float3 inputs:value = (0.5, 0.5, 0.5)
+            float3 outputs:out
+            float2 ui:nodegraph:node:pos = (-315.9462, 8.715965)
+            float2 ui:nodegraph:node:size = (154.5, 53)
+            int ui:nodegraph:node:stackingOrder = 569
+        }
+
+        def Shader "Constant_2"
+        {
+            uniform token info:id = "ND_constant_vector3"
+            float3 inputs:value = (0.5, 0.5, 0.5)
+            float3 outputs:out
+            float2 ui:nodegraph:node:pos = (-269.08292, 58.536278)
+            float2 ui:nodegraph:node:size = (156, 53)
+            int ui:nodegraph:node:stackingOrder = 570
+        }
+
+        def Shader "Add"
+        {
+            uniform token info:id = "ND_add_vector3"
+            float3 inputs:in1.connect = </Root/worldPosMaterial/Multiply.outputs:out>
+            float3 inputs:in2.connect = </Root/worldPosMaterial/Constant_2.outputs:out>
+            float3 outputs:out
+            float2 ui:nodegraph:node:pos = (-103.774315, -5.0027847)
+            float2 ui:nodegraph:node:size = (61.5, 36.5)
+            int ui:nodegraph:node:stackingOrder = 572
+        }
+
+        def Shader "UnlitSurface"
+        {
+            uniform token info:id = "ND_realitykit_unlit_surfaceshader"
+            bool inputs:applyPostProcessToneMap
+            color3f inputs:color.connect = </Root/worldPosMaterial/Swizzle.outputs:out>
+            bool inputs:hasPremultipliedAlpha
+            float inputs:opacity = 1
+            float inputs:opacityThreshold
+            token outputs:out
+            float2 ui:nodegraph:node:pos = (170.23242, 34.946854)
+            float2 ui:nodegraph:node:size = (194.5, 181)
+            int ui:nodegraph:node:stackingOrder = 574
+            string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:opacity"]
+        }
+
+        def Shader "Swizzle"
+        {
+            uniform token info:id = "ND_swizzle_vector3_color3"
+            string inputs:channels = "rgb"
+            float3 inputs:in.connect = </Root/worldPosMaterial/Add.outputs:out>
+            color3f outputs:out
+            float2 ui:nodegraph:node:pos = (-34.035286, 70.083176)
+            float2 ui:nodegraph:node:size = (133.5, 40)
+            int ui:nodegraph:node:stackingOrder = 573
+            string[] ui:nodegraph:realitykit:node:attributesShowingChildren = []
+        }
+    }
+}
+
