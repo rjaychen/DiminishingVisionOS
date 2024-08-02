@@ -9,6 +9,7 @@ import SwiftUI
 import ARKit
 import RealityKit
 import UniformTypeIdentifiers
+import AudioToolbox
 
 struct HomeView: View {
     @Bindable var appState: AppState
@@ -70,8 +71,9 @@ struct HomeView: View {
                                 Task {
                                     let p = appState.xyInImage
                                     if let result = await modelHandler.processImage(appState.uiImagetoInpaint, point: Point(x: p.x, y: p.y, label: 1)) {
-                                        let material: PhysicallyBasedMaterial =  result.loadTextureToMat()!
-                                        appState.imageToInpaint.model?.materials = [material]
+                                        await MainActor.run {
+                                            let material: PhysicallyBasedMaterial =  result.loadTextureToMat()!
+                                            appState.imageToInpaint.model?.materials = [material] }
                                     }
                                 }
                             }
@@ -208,7 +210,20 @@ struct HomeView: View {
                         Text("No preview available")
                     }
                 } else {
-                    Text("No object selected")
+                    //Text("No object selected")
+                    Text("Press \" Start Tracking \" to begin.")
+                    if appState.isImmersiveSpaceOpened {
+                        if appState.deskAnchor != nil {
+                            Text("Image Anchor Found")
+                            Image(systemName: "checkmark.circle")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.green)
+                        } else {
+                            Text("Looking for image marker...")
+                            ProgressView()
+                        }
+                    }
                 }
             }
         }

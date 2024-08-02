@@ -37,7 +37,7 @@ class AppState {
     private var imageAnchors: [UUID: Entity] = [:]
     public var uiImagetoInpaint = UIImage(named: "japan_street")!
     public var imageToInpaint: ModelEntity!
-    private var deskAnchor: Entity? = nil
+    public var deskAnchor: Entity? = nil
     private var worldEntity = Entity()
     private var imagePoints = [SIMD4<Float>]()
     public var xyInImage = SIMD2<Float>(0.0, 0.0)
@@ -216,7 +216,6 @@ class AppState {
             }
         }
     }
-    
     
     
     func makeXRotationMatrix(angle: Float) -> simd_float4x4 {

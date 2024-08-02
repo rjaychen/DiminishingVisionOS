@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3274A43C2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject in Sources */ = {isa = PBXBuildFile; fileRef = 3274A43B2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject */; };
+		3283E9DF2C5D347900B981F3 /* LaMa.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 3283E9DE2C5D347900B981F3 /* LaMa.mlpackage */; };
 		328D304C2C24981B003F1E92 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 328D304B2C24981B003F1E92 /* RealityKitContent */; settings = {ATTRIBUTES = (Required, ); }; };
 		32CE97C12C5A9D8000FF2AFB /* SegmentAnything.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CE97BF2C5A9D8000FF2AFB /* SegmentAnything.swift */; };
 		32CE97C22C5A9D8000FF2AFB /* MaskProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CE97BA2C5A9D8000FF2AFB /* MaskProcessor.swift */; };
@@ -18,7 +19,6 @@
 		32CE97C72C5A9D8000FF2AFB /* ImageProcessingFuncs.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32CE97BD2C5A9D8000FF2AFB /* ImageProcessingFuncs.metal */; };
 		32CE97C92C5A9D8800FF2AFB /* ModelHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CE97C82C5A9D8800FF2AFB /* ModelHandler.swift */; };
 		32CE97CB2C5A9D8B00FF2AFB /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CE97CA2C5A9D8B00FF2AFB /* TextureLoader.swift */; };
-		32CE97CD2C5A9DC400FF2AFB /* LaMa.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 32CE97CC2C5A9DC400FF2AFB /* LaMa.mlpackage */; };
 		32D778DA2C5963C10055681A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32D778D92C5963C10055681A /* Assets.xcassets */; };
 		393E4AB02A9629A7005C9691 /* Entity+ObjectTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E4AAF2A9629A7005C9691 /* Entity+ObjectTracking.swift */; };
 		394D18CF2A960EB9009E3A2E /* ObjectTrackingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394D18CE2A960EB9009E3A2E /* ObjectTrackingApp.swift */; };
@@ -33,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		3274A43B2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject */ = {isa = PBXFileReference; lastKnownFileType = file.referenceobject; path = MXVerticalObjectTracker.referenceobject; sourceTree = "<group>"; };
+		3283E9DE2C5D347900B981F3 /* LaMa.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = LaMa.mlpackage; sourceTree = "<group>"; };
 		328D304E2C2498DD003F1E92 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		32CE97B62C5A9D8000FF2AFB /* edge_sam_3x_encoder.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = edge_sam_3x_encoder.mlpackage; sourceTree = "<group>"; };
 		32CE97B72C5A9D8000FF2AFB /* edge_sam_3x_decoder.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = edge_sam_3x_decoder.mlpackage; sourceTree = "<group>"; };
@@ -45,7 +46,6 @@
 		32CE97BF2C5A9D8000FF2AFB /* SegmentAnything.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentAnything.swift; sourceTree = "<group>"; };
 		32CE97C82C5A9D8800FF2AFB /* ModelHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelHandler.swift; sourceTree = "<group>"; };
 		32CE97CA2C5A9D8B00FF2AFB /* TextureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureLoader.swift; sourceTree = "<group>"; };
-		32CE97CC2C5A9DC400FF2AFB /* LaMa.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = LaMa.mlpackage; sourceTree = "<group>"; };
 		32D778D92C5963C10055681A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		393E4AAD2A96284F005C9691 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		393E4AAF2A9629A7005C9691 /* Entity+ObjectTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+ObjectTracking.swift"; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 			children = (
 				32CE97C02C5A9D8000FF2AFB /* SAM */,
 				394D18CE2A960EB9009E3A2E /* ObjectTrackingApp.swift */,
-				32CE97CC2C5A9DC400FF2AFB /* LaMa.mlpackage */,
+				3283E9DE2C5D347900B981F3 /* LaMa.mlpackage */,
 				EBDA9DAD2AD44E270040C78E /* Views */,
 				EBF0DF0E2AEFFDB900ABF63C /* App */,
 				EBF0DF0F2AEFFE1400ABF63C /* Extensions */,
@@ -286,7 +286,7 @@
 				396786E12B7A5CF8007A056F /* ReferenceObjectLoader.swift in Sources */,
 				32CE97CB2C5A9D8B00FF2AFB /* TextureLoader.swift in Sources */,
 				3274A43C2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject in Sources */,
-				32CE97CD2C5A9DC400FF2AFB /* LaMa.mlpackage in Sources */,
+				3283E9DF2C5D347900B981F3 /* LaMa.mlpackage in Sources */,
 				EBDA9DAC2AD44D140040C78E /* ObjectTrackingRealityView.swift in Sources */,
 				EBA142DF2AD431AD00FB20AD /* HomeView.swift in Sources */,
 				394D18CF2A960EB9009E3A2E /* ObjectTrackingApp.swift in Sources */,

@@ -38,7 +38,7 @@ class ModelHandler: ObservableObject {
     }
 
     func processImage(_ uiImage: UIImage,
-                      point: Point = Point(x: 0, y: 0, label: 1)) async -> UIImage? {
+                      point: Point = Point(x: 0, y: 0, label: 1)) async -> UIImage? { // MARK: return with checkedContinuation?
         let imageTexture = try! await self.textureLoader.loadTexture(uiImage: uiImage)
         self.segmentAnything.preprocess(image: imageTexture)
         let masks = self.segmentAnything.predictMask(points: [point])
