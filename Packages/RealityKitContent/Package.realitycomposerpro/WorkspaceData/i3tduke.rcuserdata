@@ -1,14 +1,45 @@
 {
   "advancedEditorSelectedIdentifier" : "ShaderGraphEditorPluginID",
   "openSceneRelativePaths" : [
-    "Point.usda"
+    "Point.usda",
+    "Fresnel.usda"
   ],
   "recentIdentifiers" : {
+    "15353D18-B73B-4C4C-AD98-58212B7E3D13" : [
+
+    ],
     "D882E7C7-97C1-4355-9B93-F69C8F4AB940" : [
+
+    ],
+    "E982A303-6A8E-4729-89DA-33D7F79996E4" : [
 
     ]
   },
   "sceneCameraHistory" : {
+    "15353D18-B73B-4C4C-AD98-58212B7E3D13" : [
+      {
+        "date" : 744571435.486838,
+        "title" : "Untitled",
+        "transform" : [
+          1,
+          0,
+          -0,
+          0,
+          -0,
+          0.7071069,
+          -0.7071067,
+          0,
+          0,
+          0.7071067,
+          0.7071069,
+          0,
+          5.9604645e-08,
+          1.1244693,
+          1.1244694,
+          1
+        ]
+      }
+    ],
     "D882E7C7-97C1-4355-9B93-F69C8F4AB940" : [
       {
         "date" : 740600227.371394,
@@ -125,5 +156,5 @@
   "sceneViewportBackgroundColors" : {
 
   },
-  "selectedSceneRelativePath" : "Point.usda"
+  "selectedSceneRelativePath" : "Fresnel.usda"
 }

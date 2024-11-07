@@ -7,6 +7,7 @@ The app's overall state.
 
 import ARKit
 import RealityFoundation
+import RealityKitContent
 import UIKit
 import simd
 
@@ -30,12 +31,14 @@ class AppState {
 
     private var arkitSession = ARKitSession()
     
+    private var worldTracking = WorldTrackingProvider()
     private var objectTracking: ObjectTrackingProvider? = nil
     private var imageTracking = ImageTrackingProvider(referenceImages: ReferenceImage.loadReferenceImages(inGroupNamed: "Target"))
     
     public var objectVisualizations: [UUID: ObjectAnchorVisualization] = [:]
     private var imageAnchors: [UUID: Entity] = [:]
-    public var uiImagetoInpaint = UIImage(named: "japan_street")!
+    public var uiImagetoInpaint = UIImage(named: "japan_street")! // MARK: Change this to the image you want as background
+    private var fresnelMaterial: ShaderGraphMaterial!
     public var imageToInpaint: ModelEntity!
     public var deskAnchor: Entity? = nil
     private var worldEntity = Entity()
@@ -48,9 +51,16 @@ class AppState {
     
     var worldSensingAuthorizationStatus = ARKitSession.AuthorizationStatus.notDetermined
     
-    func startTracking(with root: Entity) async {
-        let referenceObjects = referenceObjectLoader.enabledReferenceObjects
-        
+    func loadShaderGraphMaterials() async {
+        self.fresnelMaterial = try! await ShaderGraphMaterial(named: "/Root/FresnelShader", from: "Fresnel", in: realityKitContentBundle)
+        if self.fresnelMaterial != nil {
+            try! await self.fresnelMaterial.setParameter(name: "InputColor", value: .textureResource(TextureResource(named: "japan_street")))
+        }
+    }
+    
+    nonisolated func startTracking(with root: Entity) async {
+        let referenceObjects = await referenceObjectLoader.enabledReferenceObjects
+
         guard !referenceObjects.isEmpty else {
             fatalError("No reference objects to start tracking")
         }
@@ -58,12 +68,14 @@ class AppState {
         // Run a new provider every time when entering the immersive space.
         let objectTracking = ObjectTrackingProvider(referenceObjects: referenceObjects)
         do {
-            try await arkitSession.run([objectTracking, imageTracking])
+            try await arkitSession.run([objectTracking, imageTracking, worldTracking])
         } catch {
             print("Error: \(error)" )
             return
         }
-        self.objectTracking = objectTracking
+        DispatchQueue.main.async {
+            self.objectTracking = objectTracking
+        }
         Task {
             await processObjectUpdates(with: root)
         }
@@ -77,21 +89,25 @@ class AppState {
     }
 
     var allRequiredProvidersAreSupported: Bool {
-        ObjectTrackingProvider.isSupported
+        ObjectTrackingProvider.isSupported && ImageTrackingProvider.isSupported && WorldTrackingProvider.isSupported
     }
 
     var canEnterImmersiveSpace: Bool {
         allRequiredAuthorizationsAreGranted && allRequiredProvidersAreSupported
     }
 
-    func requestWorldSensingAuthorization() async {
+    nonisolated func requestWorldSensingAuthorization() async {
         let authorizationResult = await arkitSession.requestAuthorization(for: [.worldSensing])
-        worldSensingAuthorizationStatus = authorizationResult[.worldSensing]!
+        DispatchQueue.main.async {
+            self.worldSensingAuthorizationStatus = authorizationResult[.worldSensing]!
+        }
     }
     
-    func queryWorldSensingAuthorization() async {
+    nonisolated func queryWorldSensingAuthorization() async {
         let authorizationResult = await arkitSession.queryAuthorization(for: [.worldSensing])
-        worldSensingAuthorizationStatus = authorizationResult[.worldSensing]!
+        DispatchQueue.main.async {
+            self.worldSensingAuthorizationStatus = authorizationResult[.worldSensing]!
+        }
     }
     
     func processObjectUpdates(with root: Entity) async {
@@ -107,15 +123,22 @@ class AppState {
             
             switch anchorUpdate.event {
             case .added:
+                print("Object Anchor Found: \(anchor.referenceObject.name)")
+                let group = ModelSortGroup(depthPass: nil)
+                
                 let model = referenceObjectLoader.usdzsPerReferenceObjectID[anchor.referenceObject.id]
                 let visualization = ObjectAnchorVisualization(for: anchor, withModel: model)
                 visualization.entity.applyPortalRecursively(with: worldEntity)
-                print("Object Anchor Found: \(anchor.referenceObject.name)")
+                let maskSortComponent = ModelSortGroupComponent(group: group, order: 2)
+                visualization.entity.components.set(maskSortComponent)
                 self.objectVisualizations[id] = visualization
                 root.addChild(visualization.entity)
+                
             case .updated:
                 objectVisualizations[id]?.update(with: anchor)
-                ///
+//                let headTransform = await self.getDeviceTransform()
+//                let leftDirection = -headTransform.columns.0.xyz // shift the model slightly to the left to correct
+//                objectVisualizations[id]?.entity.transform.translation += leftDirection * 0.1
                 if imagePoints.count == 3 {
                     let position = anchor.originFromAnchorTransform.position
                     let u = getTargetValue(point: position, a: imagePoints[0].xyz, b: imagePoints[1].xyz)
@@ -136,39 +159,96 @@ class AppState {
         }
     }
 
+    private func dogSquare(with root: Entity, _ anchor: ImageAnchor){
+        let anchorWidth = Float(anchor.referenceImage.physicalSize.width),
+            anchorHeight = Float(anchor.referenceImage.physicalSize.width),
+            scaleFactor = anchor.estimatedScaleFactor
+        let image = UIImage(named: "japan_street")! // MARK: Change this to the image you want as background
+        // Create Image Entity
+        let w: Float = 0.22352 * scaleFactor, h: Float = 0.12573 * scaleFactor
+        //let w: Float = 0.96 * scaleFactor, h: Float = 0.54 * scaleFactor
+        imageToInpaint = ModelEntity(mesh: MeshResource.generatePlane(width: w, height: h))
+        let offset: SIMD3<Float> = [(Float(w * 0.5) + anchorWidth * 0.5), (Float(h * 0.5) + anchorHeight * 0.5), 0]
+        //let offset: SIMD3<Float> = [Float(w*0.5) - 0.27, Float(h*0.5) - (0.1 + anchorHeight * 0.5), 0]
+        imagePoints = [SIMD4<Float>(offset, 1.0) + SIMD4<Float>(x: -w * 0.5, y:  h * 0.5, z: 0, w: 0),
+                       SIMD4<Float>(offset, 1.0) + SIMD4<Float>(x:  w * 0.5, y:  h * 0.5, z: 0, w: 0),
+                       SIMD4<Float>(offset, 1.0) + SIMD4<Float>(x: -w * 0.5, y: -h * 0.5, z: 0, w: 0)]
+        imageToInpaint.transform.translation = offset + [0.0, 0.0, 0.01]
+        let imageMaterial: PhysicallyBasedMaterial =  image.loadTextureToMat()!
+        imageToInpaint.model?.materials = [imageMaterial]
+        deskAnchor = Entity()
+        deskAnchor?.addChild(imageToInpaint)
+        
+        // Create White Background
+        let background = ModelEntity(mesh: MeshResource.generatePlane(width: 1, height: 1),
+                                     materials: [SimpleMaterial(color: .white, isMetallic: false)])
+        background.transform.translation = offset
+        deskAnchor?.addChild(background)
+        
+        imageAnchors[anchor.id] = deskAnchor
+        //root.addChild(deskAnchor!) //MARK: Uncomment to display image at runtime
+        worldEntity.components.set(WorldComponent())
+        worldEntity.addChild(deskAnchor!)
+        imageAnchors[anchor.id]?.transform = Transform(matrix: anchor.originFromAnchorTransform
+                                                       * makeXRotationMatrix(angle: -.pi/2))
+        for i in 0..<imagePoints.count {
+            imagePoints[i] = imageAnchors[anchor.id]!.transform.matrix * imagePoints[i]
+        }
+        root.addChild(worldEntity)
+        print("Image Anchor Found: \(anchor.referenceImage.name!)")
+
+    }
+    
+    private func catSquare(with root: Entity, _ anchor: ImageAnchor) {
+        let anchorWidth = Float(anchor.referenceImage.physicalSize.width),
+            anchorHeight = Float(anchor.referenceImage.physicalSize.width),
+            scaleFactor = anchor.estimatedScaleFactor
+        let image = UIImage(named: "woodtable2")! // MARK: Change this to the image you want as background
+        uiImagetoInpaint = UIImage(named: "japan_street")! // MARK: Change UIimage inpaint each time you select a different background
+        // Create Image Entity
+        //let w: Float = 0.22352 * scaleFactor, h: Float = 0.12573 * scaleFactor
+        let w: Float = 0.96 * scaleFactor, h: Float = 0.54 * scaleFactor
+        imageToInpaint = ModelEntity(mesh: MeshResource.generatePlane(width: w, height: h))
+        //let offset: SIMD3<Float> = [(Float(w * 0.5) + anchorWidth * 0.5), (Float(h * 0.5) + anchorHeight * 0.5), 0]
+        let offset: SIMD3<Float> = [Float(w*0.5) - 0.27, Float(h*0.5) - (0.1 + anchorHeight * 0.5), 0]
+        imagePoints = [SIMD4<Float>(offset, 1.0) + SIMD4<Float>(x: -w * 0.5, y:  h * 0.5, z: 0, w: 0),
+                       SIMD4<Float>(offset, 1.0) + SIMD4<Float>(x:  w * 0.5, y:  h * 0.5, z: 0, w: 0),
+                       SIMD4<Float>(offset, 1.0) + SIMD4<Float>(x: -w * 0.5, y: -h * 0.5, z: 0, w: 0)]
+        imageToInpaint.transform.translation = offset + [0.0, 0.0, 0.01]
+        let imageMaterial: PhysicallyBasedMaterial =  image.loadTextureToMat()!
+        imageToInpaint.model?.materials = [imageMaterial]
+        deskAnchor = Entity()
+        deskAnchor?.addChild(imageToInpaint)
+        
+        // Create White Background
+        let background = ModelEntity(mesh: MeshResource.generatePlane(width: 1, height: 1),
+                                     materials: [SimpleMaterial(color: .white, isMetallic: false)])
+        background.transform.translation = offset
+        deskAnchor?.addChild(background)
+        
+        imageAnchors[anchor.id] = deskAnchor
+        //root.addChild(deskAnchor!) //MARK: Uncomment to display image at runtime
+        worldEntity.components.set(WorldComponent())
+        worldEntity.addChild(deskAnchor!)
+        imageAnchors[anchor.id]?.transform = Transform(matrix: anchor.originFromAnchorTransform
+                                                       * makeXRotationMatrix(angle: -.pi/2))
+        for i in 0..<imagePoints.count {
+            imagePoints[i] = imageAnchors[anchor.id]!.transform.matrix * imagePoints[i]
+        }
+        root.addChild(worldEntity)
+        print("Image Anchor Found: \(anchor.referenceImage.name!)")
+
+    }
+    
     private func updateImageAnchor(with root: Entity, _ anchor: ImageAnchor) {
         /// Create the anchor entity
         if imageAnchors[anchor.id] == nil {
-            let anchorWidth = Float(anchor.referenceImage.physicalSize.width),
-                anchorHeight = Float(anchor.referenceImage.physicalSize.width),
-                scaleFactor = anchor.estimatedScaleFactor
-            let image = UIImage(named: "japan_street")!
-            let w: Float = 0.22352 * scaleFactor, h: Float = 0.12573 * scaleFactor
-            imageToInpaint = ModelEntity(mesh: MeshResource.generatePlane(width: w, height: h))
-            let offset: SIMD3<Float> = [(Float(w * 0.5) + anchorWidth * 0.5), (Float(h * 0.5) + anchorHeight * 0.5), 0]
-            imagePoints = [SIMD4<Float>(offset, 1.0) + SIMD4<Float>(x: -w * 0.5, y:  h * 0.5, z: 0, w: 0),
-                           SIMD4<Float>(offset, 1.0) + SIMD4<Float>(x:  w * 0.5, y:  h * 0.5, z: 0, w: 0),
-                           SIMD4<Float>(offset, 1.0) + SIMD4<Float>(x: -w * 0.5, y: -h * 0.5, z: 0, w: 0)]
-            imageToInpaint.transform.translation = offset + [0.0, 0.0, 0.01]
-            let material: PhysicallyBasedMaterial =  image.loadTextureToMat()!
-            imageToInpaint.model?.materials = [material]
-            deskAnchor = Entity()
-            deskAnchor?.addChild(imageToInpaint)
-            let background = ModelEntity(mesh: MeshResource.generatePlane(width: 1, height: 1),
-                                         materials: [SimpleMaterial(color: .white, isMetallic: false)])
-            background.transform.translation = offset
-            deskAnchor?.addChild(background)
-            imageAnchors[anchor.id] = deskAnchor
-            //root.addChild(deskAnchor!) //MARK: Uncomment to display image at runtime
-            worldEntity.components.set(WorldComponent())
-            worldEntity.addChild(deskAnchor!)
-            imageAnchors[anchor.id]?.transform = Transform(matrix: anchor.originFromAnchorTransform
-                                                           * makeXRotationMatrix(angle: -.pi/2))
-            for i in 0..<imagePoints.count {
-                imagePoints[i] = imageAnchors[anchor.id]!.transform.matrix * imagePoints[i]
+            if anchor.referenceImage.name == "dogsquare" {
+                dogSquare(with: root, anchor)
             }
-            root.addChild(worldEntity)
-            print("Image Anchor Found: \(anchor.referenceImage.name!)")
+            if anchor.referenceImage.name == "catsquare" {
+                catSquare(with: root, anchor)
+            }
         }
     }
     
@@ -217,6 +297,13 @@ class AppState {
         }
     }
     
+    /// Utilities
+    
+    func getDeviceTransform() async -> simd_float4x4 {
+        guard let deviceAnchor = worldTracking.queryDeviceAnchor(atTimestamp: CACurrentMediaTime())
+            else { return .init() }
+            return deviceAnchor.originFromAnchorTransform
+    }
     
     func makeXRotationMatrix(angle: Float) -> simd_float4x4 {
         let rows = [

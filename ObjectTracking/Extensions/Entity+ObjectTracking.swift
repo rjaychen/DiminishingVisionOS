@@ -65,6 +65,7 @@ extension simd_float4 {
 }
 
 extension UIImage {
+    @MainActor
     func loadTextureToMat() -> PhysicallyBasedMaterial? {
         let image = self
         guard let cgImage = image.cgImage else {
@@ -74,7 +75,7 @@ extension UIImage {
         let textureResource = try? TextureResource.init(image: cgImage, options: .init(semantic: .color))
         var material = PhysicallyBasedMaterial()
         material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: PhysicallyBasedMaterial.Texture(textureResource!))
-        material.blending = .transparent(opacity: .init(floatLiteral:0.8))
+        //material.blending = .transparent(opacity: .init(floatLiteral:0.8))
         return material
     }
 }

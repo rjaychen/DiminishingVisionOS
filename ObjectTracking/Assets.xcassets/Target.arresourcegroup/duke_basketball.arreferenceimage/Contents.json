@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "duke_basketball.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "width" : 0.073999999999999996
+  }
+}

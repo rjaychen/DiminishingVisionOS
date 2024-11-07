@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3274A43C2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject in Sources */ = {isa = PBXBuildFile; fileRef = 3274A43B2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject */; };
-		3283E9DF2C5D347900B981F3 /* LaMa.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 3283E9DE2C5D347900B981F3 /* LaMa.mlpackage */; };
+		3283E9E12C5D7C2E00B981F3 /* LaMa.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 3283E9E02C5D7C2E00B981F3 /* LaMa.mlpackage */; };
 		328D304C2C24981B003F1E92 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 328D304B2C24981B003F1E92 /* RealityKitContent */; settings = {ATTRIBUTES = (Required, ); }; };
+		32C25C472CB43F6A00DCD789 /* charmander.referenceobject in Sources */ = {isa = PBXBuildFile; fileRef = 32C25C462CB43F6A00DCD789 /* charmander.referenceobject */; };
 		32CE97C12C5A9D8000FF2AFB /* SegmentAnything.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CE97BF2C5A9D8000FF2AFB /* SegmentAnything.swift */; };
 		32CE97C22C5A9D8000FF2AFB /* MaskProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CE97BA2C5A9D8000FF2AFB /* MaskProcessor.swift */; };
 		32CE97C32C5A9D8000FF2AFB /* mask.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32CE97B92C5A9D8000FF2AFB /* mask.metal */; };
@@ -33,8 +34,9 @@
 
 /* Begin PBXFileReference section */
 		3274A43B2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject */ = {isa = PBXFileReference; lastKnownFileType = file.referenceobject; path = MXVerticalObjectTracker.referenceobject; sourceTree = "<group>"; };
-		3283E9DE2C5D347900B981F3 /* LaMa.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = LaMa.mlpackage; sourceTree = "<group>"; };
+		3283E9E02C5D7C2E00B981F3 /* LaMa.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = LaMa.mlpackage; sourceTree = "<group>"; };
 		328D304E2C2498DD003F1E92 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
+		32C25C462CB43F6A00DCD789 /* charmander.referenceobject */ = {isa = PBXFileReference; lastKnownFileType = file.referenceobject; path = charmander.referenceobject; sourceTree = "<group>"; };
 		32CE97B62C5A9D8000FF2AFB /* edge_sam_3x_encoder.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = edge_sam_3x_encoder.mlpackage; sourceTree = "<group>"; };
 		32CE97B72C5A9D8000FF2AFB /* edge_sam_3x_decoder.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = edge_sam_3x_decoder.mlpackage; sourceTree = "<group>"; };
 		32CE97B92C5A9D8000FF2AFB /* mask.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = mask.metal; sourceTree = "<group>"; };
@@ -142,7 +144,7 @@
 			children = (
 				32CE97C02C5A9D8000FF2AFB /* SAM */,
 				394D18CE2A960EB9009E3A2E /* ObjectTrackingApp.swift */,
-				3283E9DE2C5D347900B981F3 /* LaMa.mlpackage */,
+				3283E9E02C5D7C2E00B981F3 /* LaMa.mlpackage */,
 				EBDA9DAD2AD44E270040C78E /* Views */,
 				EBF0DF0E2AEFFDB900ABF63C /* App */,
 				EBF0DF0F2AEFFE1400ABF63C /* Extensions */,
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				3274A43B2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject */,
+				32C25C462CB43F6A00DCD789 /* charmander.referenceobject */,
 			);
 			path = "Reference Objects";
 			sourceTree = "<group>";
@@ -286,9 +289,10 @@
 				396786E12B7A5CF8007A056F /* ReferenceObjectLoader.swift in Sources */,
 				32CE97CB2C5A9D8B00FF2AFB /* TextureLoader.swift in Sources */,
 				3274A43C2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject in Sources */,
-				3283E9DF2C5D347900B981F3 /* LaMa.mlpackage in Sources */,
+				3283E9E12C5D7C2E00B981F3 /* LaMa.mlpackage in Sources */,
 				EBDA9DAC2AD44D140040C78E /* ObjectTrackingRealityView.swift in Sources */,
 				EBA142DF2AD431AD00FB20AD /* HomeView.swift in Sources */,
+				32C25C472CB43F6A00DCD789 /* charmander.referenceobject in Sources */,
 				394D18CF2A960EB9009E3A2E /* ObjectTrackingApp.swift in Sources */,
 				396786C62B766C54007A056F /* ObjectAnchorVisualization.swift in Sources */,
 				393E4AB02A9629A7005C9691 /* Entity+ObjectTracking.swift in Sources */,

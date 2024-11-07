@@ -27,13 +27,15 @@ struct ObjectTrackingApp: App {
                 if appState.allRequiredProvidersAreSupported {
                     await appState.referenceObjectLoader.loadBuiltInReferenceObjects()
                 }
+                await appState.loadShaderGraphMaterials()
             }
         }
         .defaultSize(CGSize(width: 480, height: 480))
         .windowStyle(.plain)
 
         ImmersiveSpace(id: UIIdentifier.immersiveSpace) {
-            ObjectTrackingRealityView(appState: appState)
+            ObjectTrackingRealityView()
+                .environment(appState)
         }
     }
 }

@@ -5,7 +5,13 @@
   },
   "resources" : [
     {
+      "filename" : "catsquare.arreferenceimage"
+    },
+    {
       "filename" : "dogsquare.arreferenceimage"
+    },
+    {
+      "filename" : "duke_basketball.arreferenceimage"
     }
   ]
 }

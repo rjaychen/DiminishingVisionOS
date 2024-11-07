@@ -12,7 +12,7 @@ import RealityKitContent
 
 @MainActor
 struct ObjectTrackingRealityView: View {
-    var appState: AppState
+    @Environment(AppState.self) var appState: AppState
     
     var root = Entity()
     
