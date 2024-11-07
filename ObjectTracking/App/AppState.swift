@@ -68,6 +68,12 @@ class AppState {
         // Run a new provider every time when entering the immersive space.
         let objectTracking = ObjectTrackingProvider(referenceObjects: referenceObjects)
         do {
+            if await imageTracking.state == .stopped {
+                await MainActor.run { imageTracking = ImageTrackingProvider(referenceImages: ReferenceImage.loadReferenceImages(inGroupNamed: "Target")) }
+            }
+            if await worldTracking.state == .stopped {
+                await MainActor.run { worldTracking = WorldTrackingProvider() }
+            }
             try await arkitSession.run([objectTracking, imageTracking, worldTracking])
         } catch {
             print("Error: \(error)" )
@@ -120,7 +126,7 @@ class AppState {
         for await anchorUpdate in objectTracking.anchorUpdates {
             let anchor = anchorUpdate.anchor
             let id = anchor.id
-            
+
             switch anchorUpdate.event {
             case .added:
                 print("Object Anchor Found: \(anchor.referenceObject.name)")
