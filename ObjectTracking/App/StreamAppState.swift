@@ -6,7 +6,7 @@ import RealityKit
 class StreamAppState {
     var texture: TextureResource? = nil
     let contentEntity = Entity()
-    var client = TCPClient(host: "10.197.8.244", port: 8000)
+    var client = TCPClient(host: "127.0.0.1", port: 8000) // MARK: Modify IP here...
     var planeEntity: ModelEntity?
     
     func addCube() {

@@ -68,16 +68,6 @@ class TCPClient {
                 } else {
                     print("Failed to create CGImage")
                 }
-//                DispatchQueue.main.async {
-//                    self.receivedImage = UIImage(named: "catsquare") // Placeholder image
-//                    if let img = self.receivedImage {
-//                        print("UIImage placeholder successfully assigned")
-//                    } else {
-//                        print("UIImage placeholder assignment failed")
-//                    }
-//                }
-                //let image = UIImage(cgImage: texture)
-            
                 self.receiveData()
             }
         }

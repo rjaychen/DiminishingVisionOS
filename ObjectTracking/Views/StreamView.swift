@@ -6,15 +6,6 @@ struct StreamView: View {
     var body: some View {
         VStack {
             ToggleImmersiveSpaceButton()
-//            Button("Connect to Server") {
-//                Task{
-//                    appState.client.setupConnection()
-//                }
-//            }
-//            .padding()
-//            .background(Color.blue)
-//            .foregroundColor(.white)
-//            .cornerRadius(10)
             if let cgImage = appState.client.receivedImage {
                 Image(uiImage: UIImage(cgImage: cgImage))
                     .resizable()
