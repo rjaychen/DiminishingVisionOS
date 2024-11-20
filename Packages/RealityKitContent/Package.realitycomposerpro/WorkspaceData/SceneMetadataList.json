@@ -29,6 +29,15 @@
       {
         "isExpanded" : true,
         "isLocked" : false
+      },
+      [
+        "15353D18-B73B-4C4C-AD98-58212B7E3D13",
+        "Root",
+        "DynamicMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
       }
     ]
   },
@@ -94,6 +103,15 @@
       [
         "AF09ED6F-1707-48FD-8720-65B998362C09",
         "Root",
+        "Sphere_Left"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "AF09ED6F-1707-48FD-8720-65B998362C09",
+        "Root",
         "Sphere_Right"
       ],
       {
@@ -103,15 +121,6 @@
       [
         "AF09ED6F-1707-48FD-8720-65B998362C09",
         "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "AF09ED6F-1707-48FD-8720-65B998362C09",
-        "Root",
-        "Sphere_Left"
       ],
       {
         "isExpanded" : true,
@@ -149,7 +158,9 @@
     "objectMetadataList" : [
       [
         "D66134B1-3681-4A8E-AFE5-29F257229F3B",
-        "Root"
+        "Root",
+        "GridMaterial",
+        "GridMaterial"
       ],
       {
         "isExpanded" : true,
@@ -157,9 +168,7 @@
       },
       [
         "D66134B1-3681-4A8E-AFE5-29F257229F3B",
-        "Root",
-        "GridMaterial",
-        "GridMaterial"
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -181,7 +190,7 @@
       [
         "D882E7C7-97C1-4355-9B93-F69C8F4AB940",
         "Root",
-        "WorldPosMaterial"
+        "Sphere"
       ],
       {
         "isExpanded" : true,
@@ -208,7 +217,7 @@
       [
         "D882E7C7-97C1-4355-9B93-F69C8F4AB940",
         "Root",
-        "Sphere"
+        "WorldPosMaterial"
       ],
       {
         "isExpanded" : true,
@@ -220,8 +229,7 @@
     "objectMetadataList" : [
       [
         "E982A303-6A8E-4729-89DA-33D7F79996E4",
-        "Root",
-        "MaterialEx06"
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -229,7 +237,8 @@
       },
       [
         "E982A303-6A8E-4729-89DA-33D7F79996E4",
-        "Root"
+        "Root",
+        "MaterialEx06"
       ],
       {
         "isExpanded" : true,

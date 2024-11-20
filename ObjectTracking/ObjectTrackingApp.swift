@@ -14,28 +14,45 @@ private enum UIIdentifier {
 @main
 @MainActor
 struct ObjectTrackingApp: App {
-    @State private var appState = AppState()
-    
+    //@State private var appState = AppState()
+    @State private var streamAppState = StreamAppState()
+    @State private var appModel = AppModel()
     var body: some Scene {
+//        WindowGroup {
+//            HomeView(
+//                appState: appState,
+//                immersiveSpaceIdentifier: UIIdentifier.immersiveSpace
+//            )
+//            
+//            .task {
+//                if appState.allRequiredProvidersAreSupported {
+//                    await appState.referenceObjectLoader.loadBuiltInReferenceObjects()
+//                }
+//                await appState.loadShaderGraphMaterials()
+//            }
+//        }
+//        .defaultSize(CGSize(width: 480, height: 480))
+//        .windowStyle(.plain)
+//        
+//        ImmersiveSpace(id: UIIdentifier.immersiveSpace) {
+//            ObjectTrackingRealityView()
+//                .environment(appState)
+//        }
         WindowGroup {
-            HomeView(
-                appState: appState,
-                immersiveSpaceIdentifier: UIIdentifier.immersiveSpace
-            )
-            
-            .task {
-                if appState.allRequiredProvidersAreSupported {
-                    await appState.referenceObjectLoader.loadBuiltInReferenceObjects()
-                }
-                await appState.loadShaderGraphMaterials()
-            }
+            StreamView(
+                appState: streamAppState
+            ).environment(appModel)
         }
-        .defaultSize(CGSize(width: 480, height: 480))
-        .windowStyle(.plain)
-
-        ImmersiveSpace(id: UIIdentifier.immersiveSpace) {
-            ObjectTrackingRealityView()
-                .environment(appState)
+        
+        ImmersiveSpace(id: appModel.immersiveSpaceID) {
+            StreamImmersiveView(appState: streamAppState)
+                .environment(appModel)
+                .onAppear {
+                    appModel.immersiveSpaceState = .open
+                }
+                .onDisappear {
+                    appModel.immersiveSpaceState = .closed
+                }
         }
     }
 }

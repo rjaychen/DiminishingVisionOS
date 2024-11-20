@@ -37,10 +37,14 @@ class AppState {
     
     public var objectVisualizations: [UUID: ObjectAnchorVisualization] = [:]
     private var imageAnchors: [UUID: Entity] = [:]
+    
+    // Inpainting Resources
     public var uiImagetoInpaint = UIImage(named: "japan_street")! // MARK: Change this to the image you want as background
     private var fresnelMaterial: ShaderGraphMaterial!
     public var imageToInpaint: ModelEntity!
-    public var deskAnchor: Entity? = nil
+    
+    // Inpainting Visualization
+    public var deskAnchor: Entity? = nil    // The entity seen through the portal
     private var worldEntity = Entity()
     private var imagePoints = [SIMD4<Float>]()
     public var xyInImage = SIMD2<Float>(0.0, 0.0)
@@ -139,7 +143,7 @@ class AppState {
                 visualization.entity.components.set(maskSortComponent)
                 self.objectVisualizations[id] = visualization
                 root.addChild(visualization.entity)
-                
+            
             case .updated:
                 objectVisualizations[id]?.update(with: anchor)
 //                let headTransform = await self.getDeviceTransform()
@@ -257,6 +261,7 @@ class AppState {
             }
         }
     }
+    
     
     func processImageUpdates(with root: Entity) async {
         for await update in imageTracking.anchorUpdates {

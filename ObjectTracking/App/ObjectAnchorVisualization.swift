@@ -52,6 +52,7 @@ class ObjectAnchorVisualization {
         entity.transform = Transform(matrix: anchor.originFromAnchorTransform)
         entity.isEnabled = anchor.isTracked
         
+        entity.name = anchor.referenceObject.name
 //        let descriptionEntity = Entity.createText(anchor.referenceObject.name, height: textBaseHeight * axisScale)
 //        descriptionEntity.transform.translation.x = textBaseHeight * axisScale
 //        descriptionEntity.transform.translation.y = anchor.boundingBox.extent.y * 0.5

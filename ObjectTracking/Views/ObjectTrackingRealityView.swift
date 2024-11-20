@@ -19,10 +19,29 @@ struct ObjectTrackingRealityView: View {
     @State private var objectVisualizations: [UUID: ObjectAnchorVisualization] = [:]
 
     var body: some View {
-        RealityView { content in
+        RealityView { content, attachments in
             content.add(root)
             Task {
                 await appState.startTracking(with: root)
+            }
+            
+            if let objectUI = attachments.entity(for: "Charmander") {
+                // gets here, but not to the next one...
+                objectUI.position = [-0.1, 0, 0]
+                if let charmanderEntity = root.findEntity(named: "charmander") {
+                    print("here")
+                    charmanderEntity.addChild(objectUI)
+                }
+            }
+            
+        } placeholder: {
+            ProgressView()
+        } attachments: {
+            Attachment(id: "Charmander") {
+                Text("Charmander")
+                    .font(.extraLargeTitle)
+                    .padding()
+                    .glassBackgroundEffect()
             }
         }
         .onAppear() {

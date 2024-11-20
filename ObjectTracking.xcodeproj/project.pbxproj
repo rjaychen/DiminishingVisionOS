@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		326A05882CE559C10055E8E7 /* StreamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326A05872CE559BB0055E8E7 /* StreamView.swift */; };
+		326A058A2CE55F820055E8E7 /* TCPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326A05892CE55F7F0055E8E7 /* TCPClient.swift */; };
+		326A058D2CE56AB50055E8E7 /* NIO in Frameworks */ = {isa = PBXBuildFile; productRef = 326A058C2CE56AB50055E8E7 /* NIO */; };
+		326A058F2CE56AB50055E8E7 /* NIOConcurrencyHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 326A058E2CE56AB50055E8E7 /* NIOConcurrencyHelpers */; };
+		326A05912CE56AB50055E8E7 /* NIOCore in Frameworks */ = {isa = PBXBuildFile; productRef = 326A05902CE56AB50055E8E7 /* NIOCore */; };
+		326A05932CE56AB50055E8E7 /* NIOEmbedded in Frameworks */ = {isa = PBXBuildFile; productRef = 326A05922CE56AB50055E8E7 /* NIOEmbedded */; };
+		326A05952CE56AB50055E8E7 /* NIOFoundationCompat in Frameworks */ = {isa = PBXBuildFile; productRef = 326A05942CE56AB50055E8E7 /* NIOFoundationCompat */; };
+		326A05972CE56BDA0055E8E7 /* NIOWebSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 326A05962CE56BDA0055E8E7 /* NIOWebSocket */; };
+		326A05B02CE656D70055E8E7 /* StreamImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326A05AF2CE656D40055E8E7 /* StreamImmersiveView.swift */; };
+		326A05B22CE658000055E8E7 /* StreamAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326A05B12CE657FA0055E8E7 /* StreamAppState.swift */; };
+		326A05B42CE67DDD0055E8E7 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326A05B32CE67DDD0055E8E7 /* AppModel.swift */; };
+		326A05B82CE67DEC0055E8E7 /* ToggleImmersiveSpaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326A05B72CE67DEC0055E8E7 /* ToggleImmersiveSpaceButton.swift */; };
 		3274A43C2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject in Sources */ = {isa = PBXBuildFile; fileRef = 3274A43B2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject */; };
 		3283E9E12C5D7C2E00B981F3 /* LaMa.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 3283E9E02C5D7C2E00B981F3 /* LaMa.mlpackage */; };
 		328D304C2C24981B003F1E92 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 328D304B2C24981B003F1E92 /* RealityKitContent */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -33,6 +45,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		326A05872CE559BB0055E8E7 /* StreamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamView.swift; sourceTree = "<group>"; };
+		326A05892CE55F7F0055E8E7 /* TCPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPClient.swift; sourceTree = "<group>"; };
+		326A05AF2CE656D40055E8E7 /* StreamImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamImmersiveView.swift; sourceTree = "<group>"; };
+		326A05B12CE657FA0055E8E7 /* StreamAppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamAppState.swift; sourceTree = "<group>"; };
+		326A05B32CE67DDD0055E8E7 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		326A05B72CE67DEC0055E8E7 /* ToggleImmersiveSpaceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleImmersiveSpaceButton.swift; sourceTree = "<group>"; };
 		3274A43B2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject */ = {isa = PBXFileReference; lastKnownFileType = file.referenceobject; path = MXVerticalObjectTracker.referenceobject; sourceTree = "<group>"; };
 		3283E9E02C5D7C2E00B981F3 /* LaMa.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = LaMa.mlpackage; sourceTree = "<group>"; };
 		328D304E2C2498DD003F1E92 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
@@ -70,7 +88,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				326A05972CE56BDA0055E8E7 /* NIOWebSocket in Frameworks */,
+				326A058F2CE56AB50055E8E7 /* NIOConcurrencyHelpers in Frameworks */,
 				328D304C2C24981B003F1E92 /* RealityKitContent in Frameworks */,
+				326A05912CE56AB50055E8E7 /* NIOCore in Frameworks */,
+				326A058D2CE56AB50055E8E7 /* NIO in Frameworks */,
+				326A05952CE56AB50055E8E7 /* NIOFoundationCompat in Frameworks */,
+				326A05932CE56AB50055E8E7 /* NIOEmbedded in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,10 +198,13 @@
 		EBDA9DAD2AD44E270040C78E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				326A05B72CE67DEC0055E8E7 /* ToggleImmersiveSpaceButton.swift */,
 				EBA142DE2AD431AD00FB20AD /* HomeView.swift */,
 				EBDA9DAB2AD44D140040C78E /* ObjectTrackingRealityView.swift */,
 				EB5034142AF137FA0020B48F /* InfoLabel.swift */,
 				E18F5F992BBD6C6500D9BFF2 /* ListEntryView.swift */,
+				326A05872CE559BB0055E8E7 /* StreamView.swift */,
+				326A05AF2CE656D40055E8E7 /* StreamImmersiveView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -185,6 +212,9 @@
 		EBF0DF0E2AEFFDB900ABF63C /* App */ = {
 			isa = PBXGroup;
 			children = (
+				326A05B32CE67DDD0055E8E7 /* AppModel.swift */,
+				326A05B12CE657FA0055E8E7 /* StreamAppState.swift */,
+				326A05892CE55F7F0055E8E7 /* TCPClient.swift */,
 				32CE97C82C5A9D8800FF2AFB /* ModelHandler.swift */,
 				32CE97CA2C5A9D8B00FF2AFB /* TextureLoader.swift */,
 				EBE296542AE27E5900F6838C /* AppState.swift */,
@@ -220,6 +250,12 @@
 			name = ObjectTracking;
 			packageProductDependencies = (
 				328D304B2C24981B003F1E92 /* RealityKitContent */,
+				326A058C2CE56AB50055E8E7 /* NIO */,
+				326A058E2CE56AB50055E8E7 /* NIOConcurrencyHelpers */,
+				326A05902CE56AB50055E8E7 /* NIOCore */,
+				326A05922CE56AB50055E8E7 /* NIOEmbedded */,
+				326A05942CE56AB50055E8E7 /* NIOFoundationCompat */,
+				326A05962CE56BDA0055E8E7 /* NIOWebSocket */,
 			);
 			productName = ObjectTracking;
 			productReference = 394D18C72A960EB9009E3A2E /* ObjectTracking.app */;
@@ -251,6 +287,7 @@
 			);
 			mainGroup = 394D18BE2A960EB9009E3A2E;
 			packageReferences = (
+				326A058B2CE56AB50055E8E7 /* XCRemoteSwiftPackageReference "swift-nio" */,
 			);
 			productRefGroup = 394D18C82A960EB9009E3A2E /* Products */;
 			projectDirPath = "";
@@ -283,12 +320,15 @@
 				32CE97C22C5A9D8000FF2AFB /* MaskProcessor.swift in Sources */,
 				32CE97C32C5A9D8000FF2AFB /* mask.metal in Sources */,
 				32CE97C42C5A9D8000FF2AFB /* edge_sam_3x_decoder.mlpackage in Sources */,
+				326A05B42CE67DDD0055E8E7 /* AppModel.swift in Sources */,
 				32CE97C52C5A9D8000FF2AFB /* edge_sam_3x_encoder.mlpackage in Sources */,
 				32CE97C62C5A9D8000FF2AFB /* ImageProcessor.swift in Sources */,
 				32CE97C72C5A9D8000FF2AFB /* ImageProcessingFuncs.metal in Sources */,
 				396786E12B7A5CF8007A056F /* ReferenceObjectLoader.swift in Sources */,
 				32CE97CB2C5A9D8B00FF2AFB /* TextureLoader.swift in Sources */,
+				326A05882CE559C10055E8E7 /* StreamView.swift in Sources */,
 				3274A43C2C232A8E000ED7B3 /* MXVerticalObjectTracker.referenceobject in Sources */,
+				326A05B82CE67DEC0055E8E7 /* ToggleImmersiveSpaceButton.swift in Sources */,
 				3283E9E12C5D7C2E00B981F3 /* LaMa.mlpackage in Sources */,
 				EBDA9DAC2AD44D140040C78E /* ObjectTrackingRealityView.swift in Sources */,
 				EBA142DF2AD431AD00FB20AD /* HomeView.swift in Sources */,
@@ -296,7 +336,10 @@
 				394D18CF2A960EB9009E3A2E /* ObjectTrackingApp.swift in Sources */,
 				396786C62B766C54007A056F /* ObjectAnchorVisualization.swift in Sources */,
 				393E4AB02A9629A7005C9691 /* Entity+ObjectTracking.swift in Sources */,
+				326A05B02CE656D70055E8E7 /* StreamImmersiveView.swift in Sources */,
+				326A05B22CE658000055E8E7 /* StreamAppState.swift in Sources */,
 				E18F5F9A2BBD6C6500D9BFF2 /* ListEntryView.swift in Sources */,
+				326A058A2CE55F820055E8E7 /* TCPClient.swift in Sources */,
 				EBE296552AE27E5900F6838C /* AppState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,7 +565,48 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		326A058B2CE56AB50055E8E7 /* XCRemoteSwiftPackageReference "swift-nio" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-nio.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.76.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		326A058C2CE56AB50055E8E7 /* NIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 326A058B2CE56AB50055E8E7 /* XCRemoteSwiftPackageReference "swift-nio" */;
+			productName = NIO;
+		};
+		326A058E2CE56AB50055E8E7 /* NIOConcurrencyHelpers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 326A058B2CE56AB50055E8E7 /* XCRemoteSwiftPackageReference "swift-nio" */;
+			productName = NIOConcurrencyHelpers;
+		};
+		326A05902CE56AB50055E8E7 /* NIOCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 326A058B2CE56AB50055E8E7 /* XCRemoteSwiftPackageReference "swift-nio" */;
+			productName = NIOCore;
+		};
+		326A05922CE56AB50055E8E7 /* NIOEmbedded */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 326A058B2CE56AB50055E8E7 /* XCRemoteSwiftPackageReference "swift-nio" */;
+			productName = NIOEmbedded;
+		};
+		326A05942CE56AB50055E8E7 /* NIOFoundationCompat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 326A058B2CE56AB50055E8E7 /* XCRemoteSwiftPackageReference "swift-nio" */;
+			productName = NIOFoundationCompat;
+		};
+		326A05962CE56BDA0055E8E7 /* NIOWebSocket */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 326A058B2CE56AB50055E8E7 /* XCRemoteSwiftPackageReference "swift-nio" */;
+			productName = NIOWebSocket;
+		};
 		328D304B2C24981B003F1E92 /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;

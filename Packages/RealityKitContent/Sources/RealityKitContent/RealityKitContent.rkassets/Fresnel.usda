@@ -10,7 +10,7 @@
 
 def Xform "Root"
 {
-    reorder nameChildren = ["Sphere", "FresnelShader"]
+    reorder nameChildren = ["Sphere", "FresnelShader", "DynamicMaterial"]
     def Sphere "Sphere" (
         active = true
         prepend apiSchemas = ["MaterialBindingAPI"]
@@ -108,6 +108,46 @@ def Xform "Root"
             color3f outputs:out
             float2 ui:nodegraph:node:pos = (-103.03516, -0.76171875)
             int ui:nodegraph:node:stackingOrder = 155
+        }
+    }
+
+    def Material "DynamicMaterial"
+    {
+        asset inputs:DiffuseColorImageInput (
+            customData = {
+                dictionary realitykit = {
+                    float2 positionInSubgraph = (-353.8789, 26.414062)
+                    int stackingOrderInSubgraph = 5
+                }
+            }
+        )
+        token outputs:mtlx:surface.connect = </Root/DynamicMaterial/PreviewSurface.outputs:out>
+        token outputs:realitykit:vertex
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
+
+        def Shader "PreviewSurface"
+        {
+            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+            color3f inputs:diffuseColor.connect = </Root/DynamicMaterial/Image.outputs:out>
+            float inputs:metallic
+            float3 inputs:normal
+            float inputs:opacity
+            float inputs:roughness
+            token outputs:out
+            float2 ui:nodegraph:node:pos = (93.5, 100.5)
+        }
+
+        def Shader "Image"
+        {
+            uniform token info:id = "ND_image_color3"
+            prepend asset inputs:file.connect = </Root/DynamicMaterial.inputs:DiffuseColorImageInput>
+            string inputs:filtertype
+            float2 inputs:texcoord
+            string inputs:uaddressmode
+            string inputs:vaddressmode
+            color3f outputs:out
+            float2 ui:nodegraph:node:pos = (-142.01953, 101.98047)
+            int ui:nodegraph:node:stackingOrder = 3
         }
     }
 }
