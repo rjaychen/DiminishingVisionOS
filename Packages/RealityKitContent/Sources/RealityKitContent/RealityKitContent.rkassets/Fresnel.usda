@@ -125,21 +125,10 @@ def Xform "Root"
         token outputs:realitykit:vertex
         float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
 
-        def Shader "PreviewSurface"
-        {
-            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
-            color3f inputs:diffuseColor.connect = </Root/DynamicMaterial/Image.outputs:out>
-            float inputs:metallic
-            float3 inputs:normal
-            float inputs:opacity
-            float inputs:roughness
-            token outputs:out
-            float2 ui:nodegraph:node:pos = (93.5, 100.5)
-        }
-
         def Shader "Image"
         {
             uniform token info:id = "ND_image_color3"
+            color3f inputs:default
             prepend asset inputs:file.connect = </Root/DynamicMaterial.inputs:DiffuseColorImageInput>
             string inputs:filtertype
             float2 inputs:texcoord
@@ -147,7 +136,20 @@ def Xform "Root"
             string inputs:vaddressmode
             color3f outputs:out
             float2 ui:nodegraph:node:pos = (-142.01953, 101.98047)
-            int ui:nodegraph:node:stackingOrder = 3
+            int ui:nodegraph:node:stackingOrder = 4
+        }
+
+        def Shader "PreviewSurface"
+        {
+            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+            color3f inputs:diffuseColor.connect = </Root/DynamicMaterial/Image.outputs:out>
+            float inputs:metallic
+            float3 inputs:normal
+            float inputs:opacity = 0.999
+            float inputs:roughness
+            token outputs:out
+            float2 ui:nodegraph:node:pos = (50.253906, 101.45703)
+            int ui:nodegraph:node:stackingOrder = 9
         }
     }
 }

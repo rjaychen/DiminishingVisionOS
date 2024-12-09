@@ -65,8 +65,8 @@ class ObjectAnchorVisualization {
         guard anchor.isTracked else { return }
         
         entity.transform = Transform(matrix: anchor.originFromAnchorTransform)
-        entity.transform.translation = entity.transform.translation - [0.01, 0.03, 0.01]
-        entity.transform.scale = entity.transform.scale * 1.1
+        entity.transform.translation = entity.transform.translation // - [0.01, 0.03, 0.01]
+        entity.transform.scale = entity.transform.scale // * 1.1
         boundingBoxOutline.update(with: anchor)
 //        let wireframe = entity.findEntity(named: "Wireframe")
 //            

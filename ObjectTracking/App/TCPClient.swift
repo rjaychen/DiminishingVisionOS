@@ -75,7 +75,6 @@ class TCPClient {
     
     ///Creates a CGImage from a byte array: [UInt8] -> CGImage
     func texture(bytes: [UInt8], width: Int, height: Int) -> CGImage? {
-        assert(bytes.count == width * height * 3)
         let bytesPerRow = width * 3 // RGB + Alpha
         let rgbaData = CFDataCreate(nil, bytes, bytes.count)!
         let provider = CGDataProvider(data: rgbaData)!

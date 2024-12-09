@@ -17,14 +17,16 @@ struct StreamImmersiveView: View {
     let drawableQueue = try! TextureResource.DrawableQueue(.init(pixelFormat: .bgra8Unorm, width: 1920, height: 1080, usage: [.renderTarget, .shaderRead, .shaderWrite], mipmapsMode: .none))
     let context = CIContext()
     @State private var cancellables = Set<AnyCancellable>()
+    @State private var plane = Entity()
+    
     var body: some View {
         RealityView { content in
             // Add the initial RealityKit content
             content.add(appState.setupContentEntity())
             do {
                 var dynamicMaterial = try await ShaderGraphMaterial(named: "/Root/DynamicMaterial", from: "Fresnel", in: realityKitContentBundle)
-                            
-                let color = CIImage(color: .red).cropped(to: CGRect(origin: .zero, size: .init(width: 1920, height: 1080)))
+                
+                let color = CIImage(color: .clear).cropped(to: CGRect(origin: .zero, size: .init(width: 1920, height: 1080)))
                 let image = context.createCGImage(color, from: color.extent)!
                             
                 let resource = try await TextureResource(image: image, options: .init(semantic: .color))
@@ -32,12 +34,17 @@ struct StreamImmersiveView: View {
                 resource.replace(withDrawables: drawableQueue)
                             
                 try dynamicMaterial.setParameter(name: "DiffuseColorImageInput", value: .textureResource(resource))
-                            
-                let plane = Entity()
+                
                 let planeResource = MeshResource.generatePlane(width: 1.92, height: 1.08)
                 plane.components.set(ModelComponent(mesh: planeResource, materials: [dynamicMaterial]))
-                plane.transform.translation = [0, 1.6, -1]
-                content.add(plane)
+                plane.components[OpacityComponent.self] = .init(opacity: 0.3)
+                plane.transform.translation = [0.198, -0.06, -1]
+                
+                let headAnchor = AnchorEntity()
+                headAnchor.anchoring = AnchoringComponent(.head)
+                headAnchor.addChild(plane)
+                
+                content.add(headAnchor)
                             
             } catch {
                 fatalError(error.localizedDescription)
@@ -49,12 +56,14 @@ struct StreamImmersiveView: View {
                     do {
                         let nextDrawable = try drawableQueue.nextDrawable()
                         
-                        let ciImage = CIImage(cgImage: appState.client.receivedImage!)
-                        let transform = CGAffineTransform.identity.scaledBy(x: 1, y: -1).translatedBy(x: 0, y: ciImage.extent.height)
-                        let image = ciImage.transformed(by: transform)
-                        context.render(image, to: nextDrawable.texture, commandBuffer: nil, bounds: image.extent, colorSpace: CGColorSpace(name: CGColorSpace.displayP3)!)
-                                        
-                        nextDrawable.present()
+                        if let cgImage = appState.client.receivedImage {
+                            let ciImage = CIImage(cgImage: cgImage)
+                            let transform = CGAffineTransform.identity.scaledBy(x: 1, y: -1).translatedBy(x: 0, y: ciImage.extent.height)
+                            let image = ciImage.transformed(by: transform)
+                            context.render(image, to: nextDrawable.texture, commandBuffer: nil, bounds: image.extent, colorSpace: CGColorSpace(name: CGColorSpace.displayP3)!)
+                            
+                            nextDrawable.present()
+                        }
                     } catch {
                         print("Failed to update image.")
                         print(error.localizedDescription)

@@ -10,6 +10,7 @@ import ARKit
 import RealityKit
 import UniformTypeIdentifiers
 import AudioToolbox
+import Combine
 
 struct HomeView: View {
     @Bindable var appState: AppState
@@ -26,6 +27,7 @@ struct HomeView: View {
     @State var selectedReferenceObjectID: ReferenceObject.ID?
     
     @ObservedObject private var modelHandler = ModelHandler()
+    @State private var cancellables = Set<AnyCancellable>()
 
     var body: some View {
         Group {
@@ -67,14 +69,17 @@ struct HomeView: View {
                                     appState.didLeaveImmersiveSpace()
                                 }
                             }
-                            Button("Inpaint Image") {
-                                Task {
-                                    let p = appState.xyInImage
-                                    if let result = await modelHandler.processImage(appState.uiImagetoInpaint, point: Point(x: p.x, y: p.y, label: 1)) {
-                                        await MainActor.run {
-                                            let material: PhysicallyBasedMaterial =  result.loadTextureToMat()!
-                                            appState.imageToInpaint.model?.materials = [material] }
+                            if appState.inpaintingRunning {
+                                Button("Stop Inpainting") {
+                                    for cancellable in cancellables {
+                                        cancellable.cancel()
                                     }
+                                    appState.inpaintingRunning = false
+                                }
+                            }
+                            else {
+                                Button("Start Inpainting") {
+                                    startInpainting()
                                 }
                             }
                             if !appState.objectTrackingStartedRunning {
@@ -213,18 +218,42 @@ struct HomeView: View {
                     //Text("No object selected")
                     Text("Press \" Start Tracking \" to begin.")
                     if appState.isImmersiveSpaceOpened {
-                        if appState.deskAnchor != nil {
+                        if appState.inpaintingRunning {
+                            Text("Inpainting Started...")
+                        }
+                        if appState.headAnchor != nil { // change to deskanchor or headanchor
                             Text("Image Anchor Found")
                             Image(systemName: "checkmark.circle")
                                 .resizable()
                                 .frame(width: 50, height: 50)
                                 .foregroundColor(.green)
-                        } else {
+                        } else if appState.headAnchor == nil {
                             Text("Looking for image marker...")
                             ProgressView()
                         }
+                        
                     }
                 }
+            }
+        }
+    }
+    
+    func startInpainting() {
+        appState.inpaintingRunning = true
+        Timer.publish(every: 2.0, on: .main, in: .common).autoconnect().sink { output in
+            self.inpaintImage()
+        }.store(in: &cancellables)
+    }
+    
+    func inpaintImage() {
+        Task {
+            let p = appState.xyInImage
+            if let result = await modelHandler.processImage(UIImage(cgImage: appState.client.receivedImage!),
+                                                            point: Point(x: p.x, y: p.y, label: 1)) {
+                await MainActor.run {
+                    let material: PhysicallyBasedMaterial =  result.loadTextureToMat()!
+                    appState.imageToDisplay.model?.materials = [material] }
+                print("image inpainted.")
             }
         }
     }
