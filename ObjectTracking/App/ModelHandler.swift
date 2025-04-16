@@ -71,5 +71,4 @@ class ModelHandler: ObservableObject {
         let resultImage = UIImage(cgImage: cgImage) // need to return this somehow
         return resultImage
     }
-    
 }

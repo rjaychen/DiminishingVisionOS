@@ -18,6 +18,7 @@ struct ObjectTrackingApp: App {
     //@State private var streamAppState = StreamAppState()
     @State private var appModel = AppModel()
     var body: some Scene {
+///--------------------------------------------------------------------------------------------
         WindowGroup {
             HomeView(
                 appState: appState,

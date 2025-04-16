@@ -243,6 +243,12 @@ struct HomeView: View {
         Timer.publish(every: 2.0, on: .main, in: .common).autoconnect().sink { output in
             self.inpaintImage()
         }.store(in: &cancellables)
+//        Task {
+//            while appState.inpaintingRunning {
+//                await inpaintImage()
+//                try? await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
+//            }
+//        }
     }
     
     func inpaintImage() {

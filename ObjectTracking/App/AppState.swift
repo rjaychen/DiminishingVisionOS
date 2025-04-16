@@ -38,7 +38,7 @@ class AppState {
     public var objectVisualizations: [UUID: ObjectAnchorVisualization] = [:]
     private var imageAnchors: [UUID: Entity] = [:]
     
-    var client = TCPClient(host: "192.168.1.75", port: 8000)
+    var client = TCPClient(host: "192.168.1.64", port: 8000)
     
     // Inpainting Resources
     public var inpaintingRunning = false
@@ -196,7 +196,7 @@ class AppState {
                         let x_coord = u * Float(rawImage.size.width)
                         let y_coord = v * Float(rawImage.size.height)
                         xyInImage = [x_coord, y_coord]
-                        print("(u, v): ", u, v)
+                        //print("(u, v): ", u, v)
                     }
                 }
                 ///
